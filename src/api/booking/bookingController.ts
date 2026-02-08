@@ -6,10 +6,25 @@ function bookingErrorStatus(message: string): number {
   if (message === "Booking not found") return 404;
   if (message === "You are not authorized to delete this booking") return 403;
   if (message === "Booking is active. Deactivate it before deleting") return 409;
+  if (message === "Valid userId is required") return 400;
   return 500;
 }
 
 export const bookingController = {
+    getBookingsByUserId: async (req: Request, res: Response) => {
+        try {
+            const { userId } = req.body;
+            if (!userId) {
+                return res.status(401).json({ message: "User not provided. Please log in or send a valid token." });
+            }
+            const { rows, count } = await bookingService.getBookingsByUserId(Number(userId));
+            return res.status(200).json({ message: "Bookings found", rows, count });
+        } catch (error: unknown) {
+            const msg = error instanceof Error ? error.message : "Internal server error";
+            const status = bookingErrorStatus(msg);
+            return res.status(status).json({ message: msg });
+        }
+    },
     deleteBooking: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;

@@ -9,7 +9,7 @@ export const roomService = {
       if (!data.name) {
         throw new Error("Room name is required");
       }
-      const existingRoom = await Room.findOne({ where: { name: data.name } });
+      const existingRoom = await Room.findOne({ where: { name: data.name, createdBy: userId } });
       if (existingRoom) {
         throw new Error("A room with this name already exists");
       }

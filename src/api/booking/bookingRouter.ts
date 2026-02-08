@@ -5,7 +5,7 @@ import { bookingController } from "./bookingController.js";
 
 const router = Router();
 
-
+router.get("/bookings", auth, bookingController.getBookingsByUserId);
 router.delete("/bookings/:id", auth, validator.validatorParamId, bookingController.deleteBooking);
 
 export default router;
