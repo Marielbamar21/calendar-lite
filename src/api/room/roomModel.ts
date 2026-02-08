@@ -19,6 +19,7 @@ export const Room = db.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     createdBy: {
       type: DataTypes.INTEGER,
