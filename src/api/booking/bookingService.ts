@@ -2,16 +2,6 @@ import { Booking, BookingInstance } from "./bookingModel.js";
 
 
 export const bookingService = {
-    getBookingsByUserId: async (userId: number) => {
-        if (userId == null || Number.isNaN(Number(userId))) {
-            throw new Error("Valid userId is required");
-        }
-        const rows = await Booking.findAll({
-            where: { userId },
-            order: [["start_at", "ASC"]],
-        });
-        return { rows, count: rows.length };
-    },
     deleteBooking: async (id: number, userId: number) => {
         try {
             if (!id) {
