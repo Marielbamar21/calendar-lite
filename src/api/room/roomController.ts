@@ -24,7 +24,6 @@ export const roomController = {
             const room = await roomService.createRoom(userId as number, { name });
             return res.status(201).json({ message: "Room created successfully", room });
         } catch (error: unknown) {
-            console.log("createRoom", error);
             const msg = error instanceof Error ? error.message : "Internal server error";
             const status = roomErrorStatus(msg);
             return res.status(status).json({ message: msg });
@@ -36,7 +35,6 @@ export const roomController = {
             const room = await roomService.getRoom(Number(id));
             return res.status(200).json({ message: "Room found", room });
         } catch (error: unknown) {
-            console.log("getRoom", error);
             const msg = error instanceof Error ? error.message : "Internal server error";
             const status = roomErrorStatus(msg);
             return res.status(status).json({ message: msg });
@@ -49,7 +47,6 @@ export const roomController = {
             const room = await roomService.updateRoom(Number(id), { name });
             return res.status(200).json({ message: "Room updated successfully", room });
         } catch (error: unknown) {
-            console.log("updateRoom", error);
             const msg = error instanceof Error ? error.message : "Internal server error";
             const status = roomErrorStatus(msg);
             return res.status(status).json({ message: msg });
@@ -61,7 +58,6 @@ export const roomController = {
             const room = await roomService.deleteRoom(Number(id));
             return res.status(200).json({ message: "Room deleted successfully", room });
         } catch (error: unknown) {
-            console.log("deleteRoom", error);
             const msg = error instanceof Error ? error.message : "Internal server error";
             const status = roomErrorStatus(msg);
             return res.status(status).json({ message: msg });
@@ -83,7 +79,6 @@ export const roomController = {
             const rooms = await roomService.getRooms(uid, lim, off);
             return res.status(200).json({ message: "Rooms found", rooms });
         } catch (error: unknown) {
-            console.log("getRooms", error);
             const msg = error instanceof Error ? error.message : "Internal server error";
             const status = roomErrorStatus(msg);
             return res.status(status).json({ message: msg });
@@ -110,7 +105,6 @@ export const roomController = {
                     conflictingRanges,
                 });
             }
-            console.log("createBooking", err);
             const msg = err instanceof Error ? err.message : "Internal server error";
             const status = roomErrorStatus(msg);
             return res.status(status).json({ message: msg });
@@ -129,7 +123,6 @@ export const roomController = {
             );
             return res.status(200).json({ message: "Bookings found", rows, count });
         } catch (error: unknown) {
-            console.log("getBookingsFiltered", error);
             const msg = error instanceof Error ? error.message : "Internal server error";
             const status = roomErrorStatus(msg);
             return res.status(status).json({ message: msg });
