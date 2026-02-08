@@ -13,7 +13,8 @@ export const validator = {
         return res.status(400).json({ message: "Validation error on parameters.", errors: result.array() });
       }
       next();
-    } catch {
+    } catch (error) {
+      console.log("validatorParamId", error);
       return res.status(500).json({ message: "Internal server error while validating the request." });
     }
   },
@@ -37,7 +38,8 @@ export const validator = {
         return res.status(400).json({ message: "Validation error on request body.", errors: result.array() });
       }
       next();
-    } catch {
+    } catch (error) {
+      console.log("validatorRoom", error);
       return res.status(500).json({ message: "Internal server error while validating the request." });
     }
   },
@@ -85,7 +87,8 @@ export const validator = {
         return res.status(400).json({ message: "Validation error on request body.", errors: result.array() });
       }
       next();
-    } catch {
+    } catch (error) {
+      console.log("validatorBooking", error);
       return res.status(500).json({ message: "Internal server error while validating the request." });
     }
   },
@@ -110,7 +113,8 @@ export const validator = {
         return res.status(400).json({ message: "Validation error on query parameters.", errors: result.array() });
       }
       next();
-    } catch {
+    } catch (error) {
+      console.log("validatorGetBookings", error);
       return res.status(500).json({ message: "Internal server error while validating the request." });
     }
   },
