@@ -42,7 +42,7 @@ export const authController ={
           if (!isValid) {
             return res.status(401).json({ message: "Invalid credentials. Invalid password." });
           }
-          const token = jwt.sign({ id: user.id }, config.jwt_secret as string, { expiresIn: "1h" });
+          const token = jwt.sign({ id: user.id }, config.jwt_secret as string, { expiresIn: "7d" });
           return res.status(200).json({ message: "Login successful", token });
         } catch {
           return res.status(500).json({ message: "Internal server error. Login could not be completed." });
