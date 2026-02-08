@@ -5,11 +5,13 @@ import { config } from "../../../../config/index.js";
 export function auth(req: Request, res: Response, next: NextFunction): void {
   const header = req.headers.authorization;
   if (!header) {
-    return res.status(401).json({ message: "Authorization header is missing. Please log in to continue." });
+    res.status(401).json({ message: "Authorization header is missing. Please log in to continue." });
+    return;
   }
   const token = header.split(" ")[1];
   if (!token) {
-    return res.status(401).json({ message: "Token not found. Use format: Bearer <token>." });
+    res.status(401).json({ message: "Token not found. Use format: Bearer <token>." });
+    return;
   }
   try {
     const decoded: { id: number } = jwt.verify(
@@ -21,6 +23,7 @@ export function auth(req: Request, res: Response, next: NextFunction): void {
     (req as Request & { userId: number }).userId = decoded.id;
     next();
   } catch {
-    return res.status(401).json({ message: "Invalid or expired token. Please log in again." });
+    res.status(401).json({ message: "Invalid or expired token. Please log in again." });
+    return;
   }
 }
