@@ -10,14 +10,12 @@ export const roomService = {
         throw new Error("Room name is required");
       }
       const existingRoom = await Room.findOne({ where: { name: data.name, createdBy: userId } });
-      console.log("existingRoom", existingRoom);
       if (existingRoom) {
         throw new Error("A room with this name already exists");
       }
       const room = await Room.create({ name: data.name, createdBy: userId });
       return room;
     } catch (error: unknown) {
-      console.log("createRoom", error);
       throw new Error(error instanceof Error ? error.message : String(error));
     }
   },
@@ -32,7 +30,6 @@ export const roomService = {
       }
       return room;
     } catch (error: unknown) {
-      console.log("getRoom", error);
       throw new Error(error instanceof Error ? error.message : String(error));
     }
   },
@@ -51,7 +48,6 @@ export const roomService = {
       await room.update({ name: data.name });
       return room;
     } catch (error: unknown) {
-      console.log("updateRoom", error);
       throw new Error(error instanceof Error ? error.message : String(error));
     }
   },
@@ -73,7 +69,6 @@ export const roomService = {
       await room.destroy();
       return room;
     } catch (error: unknown) {
-      console.log("deleteRoom", error);
       throw new Error(error instanceof Error ? error.message : String(error));
     }
   },
@@ -93,7 +88,6 @@ export const roomService = {
       });
       return { rows, count };
     } catch (error: unknown) {
-      console.log("getRooms", error);
       throw new Error(error instanceof Error ? error.message : String(error));
     }
   },
@@ -133,7 +127,6 @@ export const roomService = {
       const booking = await Booking.create({ ...bookingData, roomId: id });
       return booking;
     } catch (error: unknown) {
-      console.log("createBooking", error);
       if (error instanceof Error && "conflictsWith" in error) throw error;
       throw new Error(error instanceof Error ? error.message : String(error));
     }
@@ -155,7 +148,6 @@ export const roomService = {
       });
       return { rows, count };
     } catch (error: unknown) {
-      console.log("getBookingsFiltered", error);
       throw new Error(error instanceof Error ? error.message : String(error));
     }
   }
