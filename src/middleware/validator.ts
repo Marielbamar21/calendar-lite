@@ -30,7 +30,7 @@ export const validator = {
       }
 
       await Promise.all([
-        body("name").notEmpty().trim().withMessage("Room name is required"),
+        body("name").notEmpty().trim().withMessage("Room name is required").run(req),
       ]);
       const result = validationResult(req);
       if (!result.isEmpty()) {
@@ -63,22 +63,26 @@ export const validator = {
           .isString()
           .trim()
           .isLength({ min: 3, max: 80 })
-          .withMessage("Title must be between 3 and 80 characters"),
+          .withMessage("Title must be between 3 and 80 characters")
+          .run(req),
         body("start_at")
           .notEmpty()
           .withMessage("Start date is required")
           .isISO8601()
-          .withMessage("start_at must be a valid ISO 8601 date"),
+          .withMessage("start_at must be a valid ISO 8601 date")
+          .run(req),
         body("end_at")
           .notEmpty()
           .withMessage("End date is required")
           .isISO8601()
-          .withMessage("end_at must be a valid ISO 8601 date"),
+          .withMessage("end_at must be a valid ISO 8601 date")
+          .run(req),
         body("userId")
           .notEmpty()
           .withMessage("User ID is required")
           .isInt({ min: 1 })
-          .withMessage("userId must be a positive integer"),
+          .withMessage("userId must be a positive integer")
+          .run(req),
       ]);
       const result = validationResult(req);
       if (!result.isEmpty()) {
@@ -100,10 +104,10 @@ export const validator = {
       }
 
       await Promise.all([
-        query("limit").optional().isInt({ min: 1 }).withMessage("limit must be a positive integer"),
-        query("offset").optional().isInt({ min: 0 }).withMessage("offset must be a non-negative integer"),
-        query("from").notEmpty().withMessage("Query parameter from is required").isISO8601().withMessage("from must be a valid ISO 8601 date"),
-        query("to").notEmpty().withMessage("Query parameter to is required").isISO8601().withMessage("to must be a valid ISO 8601 date"),
+        query("limit").optional().isInt({ min: 1 }).withMessage("limit must be a positive integer").run(req),
+        query("offset").optional().isInt({ min: 0 }).withMessage("offset must be a non-negative integer").run(req),
+        query("from").notEmpty().withMessage("Query parameter from is required").isISO8601().withMessage("from must be a valid ISO 8601 date").run(req),
+        query("to").notEmpty().withMessage("Query parameter to is required").isISO8601().withMessage("to must be a valid ISO 8601 date").run(req),
       ]);
       const result = validationResult(req);
       if (!result.isEmpty()) {

@@ -5,18 +5,22 @@ import { config } from "../../../config/index.js"
 import { Request, Response } from "express";
 export const authController ={
     register: async (req : Request, res: Response) => {
-        const { fullname, username, email, password } = req.body;
+        const { name, username, email, password } = req.body;
         try {
-          if (!fullname || !username || !email || !password) {
-            return res.status(400).json({ message: "All fields are required: fullname, username, email, password." });
+          if (!name || !username || !email || !password) {
+            return res.status(400).json({ message: "All fields are required: name, username, email, password." });
           }
-          const exist = await User.findOne({ where: { email } });
-          if (exist) {
+          const existByEmail = await User.findOne({ where: { email } });
+          if (existByEmail) {
             return res.status(409).json({ message: "A user with this email already exists." });
+          }
+          const existByName = await User.findOne({ where: { name } });
+          if (existByName) {
+            return res.status(409).json({ message: "Name already exists." });
           }
           const hashedPassword = await bcrypt.hash(password, 10);
           const user = await User.create({
-            fullname,
+            name,
             username,
             email,
             password: hashedPassword,

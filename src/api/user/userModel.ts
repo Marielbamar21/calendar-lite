@@ -3,7 +3,7 @@ import { db } from "../../db/connection.js";
 
 export interface UserInstance extends Model {
   id: number;
-  fullname: string;
+  name: string;
   username: string;
   email: string;
   password: string;
@@ -17,9 +17,10 @@ export const User = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    fullname: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     username: {
       type: DataTypes.STRING,
